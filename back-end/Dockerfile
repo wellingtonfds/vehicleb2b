@@ -31,11 +31,15 @@ USER root
 # Copy source
 COPY . .
 
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+# RUN chmod +x init.sh
 EXPOSE 3333
 
 # RUN npm run dev
 
-ENTRYPOINT [ "npm" ,"run" ,"dev" ]
+# ENTRYPOINT [ "npm" ,"run" ,"dev" ]
 # ENTRYPOINT [ "node" ,"ace" ,"serve" ]
+ENTRYPOINT ["bash","docker-entrypoint.sh"]
 
 

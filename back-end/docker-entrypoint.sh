@@ -4,7 +4,7 @@ echo "\n\n\nNpm install:"
 npm install
 
 echo "\n\n\nCopy .env file:"
-file="./.env.docker"
+file="./.env.example"
 if [ -f "$file" ]
 then
 	echo "$file found."
@@ -16,7 +16,8 @@ else
 fi
 
 echo "\n\n\nRun migration:"
-adonis migration:run --force
+node ace migration:run
 
 echo "\n\n\nStart node server:"
-adonis serve --dev --polling
+npm run dev
+# adonis serve --dev --polling

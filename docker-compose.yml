@@ -5,9 +5,9 @@ networks:
 services:
   node:
     build:
-      args:
-        user: sammy
-        uid: 1000
+      # args:
+      #   user: sammy
+      #   uid: 1000
       context: ./back-end
       dockerfile: Dockerfile
     image: adonis-well
@@ -57,11 +57,13 @@ services:
       - --sort_buffer_size=1073741824
     restart: always
     volumes:
-      - "./docker/init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "./docker/tmp/init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: test
     ports:
       - "3306:3306"
+    networks:
+      - proxy
 
   
