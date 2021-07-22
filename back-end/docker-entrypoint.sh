@@ -1,5 +1,3 @@
-#!/bin/bash
-
 echo "\n\n\nNpm install:"
 npm install
 
@@ -20,4 +18,3 @@ node ace migration:run
 
 echo "\n\n\nStart node server:"
 npm run dev
-# adonis serve --dev --polling

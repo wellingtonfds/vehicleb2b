@@ -1,5 +1,4 @@
 FROM node:lts-alpine
-# WORKDIR /usr/src/app
 
 RUN apk update \
 && apk add --no-cache \
@@ -20,12 +19,10 @@ RUN apk update \
 WORKDIR /var/www
 # update packages
 RUN npm install -g npm
-RUN npm i -g @adonisjs/cli
 # Add package file
 COPY package.json package-lock.json ./
 
 # Install deps
-RUN npm i
 
 USER root
 # Copy source
@@ -36,10 +33,6 @@ RUN chmod +x /docker-entrypoint.sh
 # RUN chmod +x init.sh
 EXPOSE 3333
 
-# RUN npm run dev
-
-# ENTRYPOINT [ "npm" ,"run" ,"dev" ]
-# ENTRYPOINT [ "node" ,"ace" ,"serve" ]
 ENTRYPOINT ["bash","docker-entrypoint.sh"]
 
 
