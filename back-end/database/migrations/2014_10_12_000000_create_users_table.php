@@ -18,8 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('token_facebook')->nullable();
+            $table->string('token_google')->nullable();
+            $table->string('password')->nullable();
+            $table->enum('type', ['lojista', 'consultor', 'administrador'])->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

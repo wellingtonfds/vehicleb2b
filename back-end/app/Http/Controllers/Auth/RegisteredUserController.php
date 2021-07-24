@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
                 'email.required' => 'O email é obrigatório',
                 'email.unique' => 'O email ja está sendo utilizado',
                 'password.required' => 'A senha é obrigatória',
-                'password.min' => 'Sua senha tem menos de 8 caracteres'
+                'password.min' => 'Sua senha tem menos de 8 caracteres',
             ]
         );
 
@@ -57,6 +57,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return $user
+        return $user;
     }
 }
