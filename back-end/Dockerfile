@@ -1,38 +1,39 @@
-FROM node:lts-alpine
+FROM php:8.0.2-fpm
 
-RUN apk update \
-&& apk add --no-cache \
-    bash \
-    build-base \
-    gcc \
-    libtool \
-    autoconf \
-    automake \
-    pkgconfig \
-    nasm \
-    lcms2-dev \
-    libpng-dev libjpeg-turbo-dev giflib-dev tiff-dev \
-    zlib-dev \
-    && rm -rf /var/cache/apk/* 
+# Arguments defined in docker-compose.yml
+ARG user
+ARG uid
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip\
+    libzip-dev
 
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pcntl exif zip
+
+# install cron
+RUN apt-get update && apt-get -y install rsyslog
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# COPY ./php.ini "$PHP_INI_DIR/php.ini"
+# Create system user to run Composer and Artisan Commands
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
+
+# Set working directory
 WORKDIR /var/www
-# update packages
-RUN npm install -g npm
-# Add package file
-COPY package.json package-lock.json ./
 
-# Install deps
-
-USER root
-# Copy source
-COPY . .
-
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
-# RUN chmod +x init.sh
-EXPOSE 3333
-
-ENTRYPOINT ["bash","docker-entrypoint.sh"]
-
-
+USER $user
