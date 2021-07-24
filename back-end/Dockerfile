@@ -33,7 +33,15 @@ RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
+
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
 # Set working directory
 WORKDIR /var/www
+
+ENTRYPOINT ["bash","docker-entrypoint.sh"]
+
+EXPOSE 9000
 
 USER $user

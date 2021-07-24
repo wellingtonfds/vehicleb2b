@@ -12,8 +12,6 @@ services:
       dockerfile: Dockerfile
     image: laravel-b2b
     container_name: laravel-b2b
-    entrypoint:
-      - php-fpm
     environment:
       DEBUG: 'true'
     working_dir: /var/www
