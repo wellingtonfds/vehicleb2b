@@ -4,10 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LocationResource extends JsonResource
+class StoreResource extends JsonResource
 {
-    public static $wrap = 'location';
-
     /**
      * Transform the resource into an array.
      *
@@ -18,12 +16,11 @@ class LocationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'zip_code' => $this->zip_code,
-            'street' => $this->street,
-            'number' => $this->number,
-            'complement' => $this->complement,
-            'city' => new CityResource($this->city),
+            'name' => $this->id,
+            'image_url' => $this->image_url,
+            'background_url' => $this->background_url,
+            'description' => $this->description,
+            'locations' => new LocationCollectionResource($this->locations),
         ];
     }
 }
