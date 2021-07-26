@@ -25,3 +25,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::apiResource('locations', \App\Http\Controllers\LocationsController::class);
