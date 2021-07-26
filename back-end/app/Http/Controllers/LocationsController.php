@@ -19,7 +19,7 @@ class LocationsController extends Controller
 
     public $resourceCollection = LocationCollectionResource::class;
 
-    public $fillableFields = [];
+    public $fillableFields = ['name', 'street', 'number', 'zip_code', 'complement', 'city_id'];
 
     public function destroy(Location $location)
     {
