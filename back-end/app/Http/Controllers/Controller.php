@@ -15,7 +15,5 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, HasApiActions;
-
-
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, HasCrudActions;
 }

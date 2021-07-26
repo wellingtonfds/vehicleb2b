@@ -11,7 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
-trait HasApiActions
+trait HasCrudActions
 {
     /**
      * @var Model
