@@ -28,21 +28,16 @@ trait HasCrudActions
     public $resourceCollection;
 
     /**
-     * @var string[]
-     */
-    public $fillableFields = [];
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
 
 
-    public $services;
+    public $service;
     public function index()
     {
-        return new $this->resourceCollection($this->services->all());
+        return new $this->resourceCollection($this->service->all());
     }
 
     /**
@@ -53,7 +48,7 @@ trait HasCrudActions
      */
     public function store(Request $request)
     {
-        return new $this->resource($this->services->create($request->all()));
+        return new $this->resource($this->service->create($request->all()));
     }
 
     /**
@@ -64,7 +59,7 @@ trait HasCrudActions
      */
     public function show(int $model)
     {
-        return new $this->resource($this->services->find($model));
+        return new $this->resource($this->service->find($model));
     }
 
     /**
@@ -76,7 +71,7 @@ trait HasCrudActions
      */
     public function update(Request $request, int $model)
     {
-        return new $this->resource($this->services->update($model, $request->all()));
+        return new $this->resource($this->service->update($model, $request->all()));
     }
 
     /**
@@ -87,7 +82,7 @@ trait HasCrudActions
      */
     public function destroy(int $model)
     {
-        $this->services->delete($model);
+        $this->service->delete($model);
 
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }

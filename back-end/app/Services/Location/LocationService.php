@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Locations;
+namespace App\Services\Location;
 
 use App\Repositories\LocationRepository;
 use App\Services\Crud\CrudServiceAbstract;
 use App\Services\Crud\CrudServiceInterface;
 
-class LocationServices extends CrudServiceAbstract implements LocationServicesInterface, CrudServiceInterface
+class LocationService extends CrudServiceAbstract implements LocationServiceInterface, CrudServiceInterface
 {
     public function __construct()
     {
