@@ -1,13 +1,15 @@
 <?php
 
+namespace App\Services\Crud;
+
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface CrudServiceInterface
 {
-    public function create(Model $model): Model;
-    public function update(Model $model, array $data): Model;
-    public function delete(Model $model): Model;
+    public function create(array $model): Model;
+    public function update(int $model, array $data): Model;
+    public function delete(int $model): Model;
     public function find(int $id): Model;
-    public function all(): Paginator;
+    public function all(): LengthAwarePaginator;
 }

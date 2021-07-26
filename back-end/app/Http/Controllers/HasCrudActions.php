@@ -3,13 +3,12 @@
 
 namespace App\Http\Controllers;
 
-
+use CrudServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 trait HasCrudActions
 {
@@ -38,11 +37,12 @@ trait HasCrudActions
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public $services;
     public function index()
     {
-        $models = $this->model::all();
-
-        return new $this->resourceCollection($models);
+        return new $this->resourceCollection($this->services->all());
     }
 
     /**
@@ -53,15 +53,7 @@ trait HasCrudActions
      */
     public function store(Request $request)
     {
-        try {
-            $model = new $this->model();
-            $model->fill($request->only($this->fillableFields));
-            $model->saveOrFail();
-        } catch (\Throwable $exception) {
-            throw new UnprocessableEntityHttpException('Could not create model', $exception);
-        }
-
-        return new $this->resource($model);
+        return new $this->resource($this->services->create($request->all()));
     }
 
     /**
@@ -70,9 +62,9 @@ trait HasCrudActions
      * @param  int  $id
      * @return JsonResponse
      */
-    public function show(Model $model)
+    public function show(int $model)
     {
-        return new $this->resource($model);
+        return new $this->resource($this->services->find($model));
     }
 
     /**
@@ -82,16 +74,9 @@ trait HasCrudActions
      * @param  int  $id
      * @return JsonResponse
      */
-    public function update(Request $request, Model $model)
+    public function update(Request $request, int $model)
     {
-        try {
-            $model->fill($request->only($this->fillableFields));
-            $model->saveOrFail();
-        } catch (\Throwable $exception) {
-            throw new UnprocessableEntityHttpException('Could not update model', $exception);
-        }
-
-        return new $this->resource($model);
+        return new $this->resource($this->services->update($model, $request->all()));
     }
 
     /**
@@ -100,9 +85,9 @@ trait HasCrudActions
      * @param  int  $id
      * @return JsonResponse
      */
-    public function destroy(Model $model)
+    public function destroy(int $model)
     {
-        $model->delete();
+        $this->services->delete($model);
 
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }

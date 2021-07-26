@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Services\Car\CarService;
+use App\Services\Locations\LocationServices;
+use App\Services\Locations\LocationServicesInterface;
 use CarServiceInterface;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
@@ -17,8 +19,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            CarServiceInterface::class,
-            CarService::class
+            LocationServicesInterface::class,
+            LocationServices::class
         );
     }
 

@@ -2,10 +2,10 @@
 
 namespace App\Services\Crud;
 
-use App\Repository\RepositoryInterface;
-use CrudServiceInterface;
+use App\Repositories\RepositoryInterface;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class CrudServiceAbstract implements CrudServiceInterface
 {
@@ -14,24 +14,25 @@ abstract class CrudServiceAbstract implements CrudServiceInterface
     {
         $this->repository = $repository;
     }
-
-    public function create(Model $model): Model
+    public function create(array $model): Model
     {
         return $this->repository->create($model);
     }
-    public function update(Model $model, array $data): Model
+    public function update(int $model, array $data): Model
     {
+        $model = $this->repository->find($model);
         return $this->repository->update($model, $data);
     }
-    public function delete(Model $model): Model
+    public function delete(int $model): Model
     {
+        $model = $this->repository->find($model);
         return $this->repository->delete($model);
     }
     public function find(int $id): Model
     {
         return $this->repository->find($id);
     }
-    public function all(): Paginator
+    public function all(): LengthAwarePaginator
     {
         return $this->repository->all();
     }

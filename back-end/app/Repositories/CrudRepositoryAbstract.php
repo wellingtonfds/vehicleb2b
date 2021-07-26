@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Repository\Crud;
+namespace App\Repositories;
 
-use App\Repository\RepositoryInterface;
+use App\Repositories\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
 abstract class CrudRepositoryAbstract implements RepositoryInterface
@@ -13,10 +14,11 @@ abstract class CrudRepositoryAbstract implements RepositoryInterface
     {
         $this->model = new $modelName;
     }
-    public function create(Model $model): Model
+    public function create(array $data): Model
     {
-        $model->save();
-        return $model;
+        $this->model->fill($data);
+        $this->model->save();
+        return $this->model;
     }
     public function update(Model $model, array $data): Model
     {
@@ -33,8 +35,8 @@ abstract class CrudRepositoryAbstract implements RepositoryInterface
     {
         return $this->model->findOrFail($id);
     }
-    public function all(): Paginator
+    public function all(): LengthAwarePaginator
     {
-        return $this->model->get()->paginate(15);
+        return $this->model->paginate(15);
     }
 }
