@@ -16,4 +16,14 @@ class Location extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class);
+    }
 }

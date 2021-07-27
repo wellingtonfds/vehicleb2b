@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStoreLocationTable extends Migration
+class CreateLocationUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateStoreLocationTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_location', function (Blueprint $table) {
+        Schema::create('location_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('store_id');
+            $table->unsignedBigInteger('location_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('store_id', 'sl_location_fk')
-                ->references('id')
-                ->on('stores');
-            $table->foreign('user_id', 'sl_user_fk')
-                ->references('id')
-                ->on('users');
+            $table->foreign('location_id', 'lu_location_fk')
+            ->references('id')
+            ->on('locations');
+            $table->foreign('user_id', 'lu_user_fk')
+            ->references('id')
+            ->on('users');
         });
     }
 
@@ -35,6 +35,6 @@ class CreateStoreLocationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_location');
+        Schema::dropIfExists('location_user');
     }
 }
