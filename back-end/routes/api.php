@@ -21,11 +21,15 @@ Route::get('/', function () {
 });
 
 
-Route::resource('cars', CarController::class);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 require __DIR__ . '/auth.php';
 
-Route::apiResource('locations', \App\Http\Controllers\LocationsController::class);
+Route::middleware('auth:api')->group(function () {
+    require __DIR__ . '/api/locations.php';
+
+    Route::apiResource('locations', \App\Http\Controllers\LocationsController::class);
+});
+
