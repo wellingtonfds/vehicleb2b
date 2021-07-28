@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,8 @@ Route::get('/', function () {
 });
 
 
+Route::get('vehicle', [VehicleController::class, 'index']);
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -32,4 +35,3 @@ Route::middleware('auth:api')->group(function () {
 
     Route::apiResource('locations', \App\Http\Controllers\LocationsController::class);
 });
-
