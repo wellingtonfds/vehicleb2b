@@ -19,10 +19,10 @@ class CreateStoreUserTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('store_id', 'lu_store_fk')
+            $table->foreign('store_id', 'su_store_fk')
                 ->references('id')
                 ->on('stores');
-            $table->foreign('user_id', 'lu_user_fk')
+            $table->foreign('user_id', 'su_user_fk')
                 ->references('id')
                 ->on('users');
         });
