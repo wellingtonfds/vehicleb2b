@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserCollectionResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\User\UserService;
+use http\Exception\UnexpectedValueException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UsersController extends Controller
 {
+    public $resource = UserResource::class;
+    public $resourceCollection = UserCollectionResource::class;
+    public $model = User::class;
+    public $service = UserService::class;
+
     public function update(Request $request, int $model)
     {
         // If it's not an admin
@@ -39,5 +48,22 @@ class UsersController extends Controller
         }
 
         parent::show($model);
+    }
+
+    public function getByType(string $type)
+    {
+        $userTypes = collect([
+            User::TYPE_ADMINISTRADOR,
+            User::TYPE_CONSULTOR,
+            User::TYPE_LOJISTA
+        ]);
+
+        if (!$userTypes->contains($type)) {
+            throw new UnexpectedValueException('Tipo de usuário não existente');
+        }
+
+        $users = $this->model::query()->where('type', $type)->paginate();
+
+        return new $this->resourceCollection($users);
     }
 }
