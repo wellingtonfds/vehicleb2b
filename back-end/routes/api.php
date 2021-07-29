@@ -27,6 +27,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 require __DIR__ . '/auth.php';
 
+Route::get('states/ibge', [\App\Http\Controllers\StatesController::class, 'getFromIBGE']);
+Route::get('cities/ibge', [\App\Http\Controllers\CitiesController::class, 'getFromIBGE']);
+
 Route::middleware('auth:api')->group(function () {
     require __DIR__ . '/api/locations.php';
 

@@ -16,3 +16,4 @@ php artisan migrate
 
 echo "Run Server"
 php-fpm
+
