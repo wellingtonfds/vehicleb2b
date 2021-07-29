@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class StoresController extends Controller
 {
+    use HasCrudActions;
+
     public $resource = StoreResource::class;
 
     public $resourceCollection = StoreCollectionResource::class;

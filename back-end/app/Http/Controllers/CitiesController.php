@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Http;
 
 class CitiesController extends Controller
 {
+    use HasCrudActions;
+
     public function getFromIBGE()
     {
         $states = State::all();
