@@ -14,4 +14,9 @@ class Store extends Model
     {
         return $this->belongsToMany(Store::class);
     }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
