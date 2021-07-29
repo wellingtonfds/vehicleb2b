@@ -13,8 +13,6 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class LocationsController extends Controller
 {
-    use HasCrudActions;
-
     public $model = Location::class;
     public $resource = LocationResource::class;
     public $resourceCollection = LocationCollectionResource::class;

@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Http;
 
 class StatesController extends Controller
 {
-    use HasCrudActions;
-
     public function getFromIBGE()
     {
         $states = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')->json();
