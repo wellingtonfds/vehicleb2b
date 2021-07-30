@@ -12,7 +12,7 @@ class VehicleOlxService implements VehicleApiInterface
     {
         $this->data = $this->getDataFromApi();
     }
-    public function getDataFromApi(): array
+    public function getDataFromApi(string $method = VehicleApiInterface::GET, string $uri = null, array $params = []): array
     {
         $response = Http::get(env('API_OLX'));
 
@@ -21,9 +21,16 @@ class VehicleOlxService implements VehicleApiInterface
 
     public function filterBrands(): array
     {
+
         $carBrands = array_values(array_filter($this->data, fn ($x) => $x['id'] === 'carbrand'));
         $carBrands = array_map(function ($carBrand) {
-            return $carBrand['label'];
+            $re = '/^([A-Z]+\s?\-?\s)([A-Z]+)/m';
+            $matches = [];
+            preg_match($re, $carBrand['label'], $matches);
+            if ($matches) {
+                return $matches[1] . ucfirst(strtolower($matches[2]));
+            }
+            return ucfirst(strtolower($carBrand['label']));
         }, $carBrands[0]['values_list']);
         return $carBrands;
     }
@@ -32,10 +39,7 @@ class VehicleOlxService implements VehicleApiInterface
     {
         $carBrands = array_values(array_filter($this->data, fn ($x) => $x['id'] === 'carbrand'));
         $carBrands = array_map(function ($carBrand) {
-            dd($carBrand);
 
-            C6 EXCLUSIVE 3.0 V6 24V 215CV AUT.
-            C6 Exclusive 3.0 V6 24V 215cv Aut.
             return [
                 'label' => $carBrand['label'],
                 'values' => $carBrand['values'],

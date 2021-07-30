@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Repositories\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 
 abstract class CrudRepositoryAbstract implements RepositoryInterface
 {
@@ -16,9 +15,12 @@ abstract class CrudRepositoryAbstract implements RepositoryInterface
     }
     public function create(array $data): Model
     {
-        $this->model->fill($data);
-        $this->model->save();
-        return $this->model;
+        return get_class($this->model)::create($data);
+    }
+
+    public function updateOrCreate(array $data): Model
+    {
+        return get_class($this->model)::updateOrCreate($data);
     }
     public function update(Model $model, array $data): Model
     {

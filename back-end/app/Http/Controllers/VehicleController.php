@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Vehicle\Api\VehicleApiProxy;
 use App\Services\Vehicle\Api\VehicleOlxService;
 use App\Services\Vehicle\VehicleService;
 
@@ -14,7 +15,9 @@ class VehicleController
      */
     public function index()
     {
+
+
         $service = new VehicleService(new VehicleOlxService());
-        dd($service->getCarBrandsWithModels());
+        dd($service->init());
     }
 }
