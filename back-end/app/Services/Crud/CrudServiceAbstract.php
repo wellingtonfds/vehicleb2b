@@ -3,7 +3,6 @@
 namespace App\Services\Crud;
 
 use App\Repositories\RepositoryInterface;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
