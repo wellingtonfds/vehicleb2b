@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Repositories\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\LazyCollection;
 
 abstract class CrudRepositoryAbstract implements RepositoryInterface
 {
@@ -40,5 +41,10 @@ abstract class CrudRepositoryAbstract implements RepositoryInterface
     public function all(): LengthAwarePaginator
     {
         return $this->model->paginate(15);
+    }
+
+    public function cursor(): LazyCollection
+    {
+        return $this->model->cursor();
     }
 }

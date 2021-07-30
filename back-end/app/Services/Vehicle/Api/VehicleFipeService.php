@@ -16,10 +16,7 @@ class VehicleFipeService implements VehicleApiInterface
     public function getDataFromApi(string $method = VehicleApiInterface::POST, string $uri = null, array $params = []): array
     {
         // self::POST
-        $response = Http::post(env('API_FIPE') . $uri, [
-            'codigoTipoVeiculo' => 1,
-            'codigoTabelaReferencia' => 265
-        ]);
+        $response = Http::post(env('API_FIPE') . $uri, $params);
 
         // dd($response->json());
 
@@ -33,6 +30,16 @@ class VehicleFipeService implements VehicleApiInterface
             'codigoTabelaReferencia' => 265
         ];
         return $this->getDataFromApi(VehicleApiInterface::POST, 'ConsultarMarcas', $params);
+    }
+
+    public function filterModelVersionByBrandId(int $brand): array
+    {
+        $params = [
+            'codigoTipoVeiculo' => 1,
+            'codigoTabelaReferencia' => 265,
+            'codigoMarca' => $brand
+        ];
+        return $this->getDataFromApi(VehicleApiInterface::POST, 'ConsultarModelos', $params);
     }
 
     public function getCarBrandsWithModels(): array

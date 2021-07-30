@@ -15,9 +15,7 @@ class VehicleController
      */
     public function index()
     {
-
-
         $service = new VehicleService(new VehicleOlxService());
-        dd($service->init());
+        dd($service->updateCars());
     }
 }

@@ -10,4 +10,9 @@ class CarBrand extends Model
     use HasFactory;
 
     protected $fillable = ['label', 'cod_fipe'];
+
+    public function carModels()
+    {
+        return $this->hasMany(CarModel::class);
+    }
 }
