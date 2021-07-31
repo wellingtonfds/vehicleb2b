@@ -16,8 +16,7 @@ class CreateVehicleTypesTable extends Migration
         Schema::create('vehicle_types', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->string('cod_fipe');
-            $table->enum('origin', ['fipe', 'manual'])->default('manual');
+            $table->string('cod_fipe')->nullable();
             $table->timestamps();
         });
     }

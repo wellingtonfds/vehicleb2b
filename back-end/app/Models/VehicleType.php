@@ -9,10 +9,7 @@ class VehicleType extends Model
 {
     use HasFactory;
 
-    const ORIGEN_FIPE = 'fipe';
-    const ORIGEN_MANUAL = 'manual';
-
-    protected $fillable = ['label', 'cod_fipe', 'origen'];
+    protected $fillable = ['label', 'cod_fipe'];
 
     public function brands()
     {

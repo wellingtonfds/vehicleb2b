@@ -11,4 +11,9 @@ class VehicleModelRepository extends CrudRepositoryAbstract
     {
         parent::__construct(VehicleModel::class);
     }
+
+    public function getModelByLabel(string $label)
+    {
+        return $this->model->where('label', $label)->first();
+    }
 }

@@ -22,6 +22,36 @@ class VehicleFipeService implements VehicleApiInterface
 
         return $response->json();
     }
+    /**
+     * 
+     */
+    public function getBrandsByType(int $type)
+    {
+        $types =  $this->getDataFromApi(
+            VehicleApiInterface::POST,
+            'ConsultarMarcas',
+            [
+                'codigoTipoVeiculo' => $type,
+                'codigoTabelaReferencia' => 265
+            ]
+        );
+        return array_map(function ($type) {
+            return ['label' => $type['Label'], 'cod_fipe' => $type['Value']];
+        }, $types);
+    }
+    public function getModels(int $type, int $brand)
+    {
+        $models =  $this->getDataFromApi(
+            VehicleApiInterface::POST,
+            'ConsultarModelos',
+            [
+                'codigoTipoVeiculo' => $type,
+                'codigoMarca' => $brand,
+                'codigoTabelaReferencia' => 265
+            ]
+        );
+        return $models['Modelos'];
+    }
 
     public function filterBrands(): array
     {
