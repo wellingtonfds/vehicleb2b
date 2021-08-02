@@ -6,6 +6,8 @@ use App\Services\Location\LocationService;
 use App\Services\Location\LocationServiceInterface;
 use App\Services\User\UserService;
 use App\Services\User\UserServiceInterface;
+use App\Services\Vehicle\VehicleService;
+use App\Services\Vehicle\VehicleServiceInterface;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 
@@ -25,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UserServiceInterface::class,
             UserService::class
+        );
+        $this->app->bind(
+            VehicleServiceInterface::class,
+            VehicleService::class
         );
     }
 
