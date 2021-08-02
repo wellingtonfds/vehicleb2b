@@ -16,7 +16,7 @@ class CreateVehicleBrandsTable extends Migration
         Schema::create('vehicle_brands', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->string('cod_fipe');
+            $table->string('cod_fipe')->nullable();
             $table->unsignedBigInteger('vehicle_type_id');
             $table->foreign('vehicle_type_id')
                 ->references('id')

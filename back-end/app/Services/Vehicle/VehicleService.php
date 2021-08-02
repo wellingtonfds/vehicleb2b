@@ -33,8 +33,12 @@ class VehicleService extends CrudServiceAbstract implements VehicleServiceInterf
     {
         return $this->service->getCarBrandsWithModels();
     }
-
-    public function updateCars()
+    /**
+     * Update or create, Types,Model's versions.
+     * Source is API FIPE
+     * @return void
+     */
+    public function updateOrCreateFromAPI(): void
     {
         $vehicleTypes = new VehicleTypeRepository();
         $vehicleBrands = new VehicleBrandRepository();
@@ -43,77 +47,60 @@ class VehicleService extends CrudServiceAbstract implements VehicleServiceInterf
 
         // Insert Brands
         $vehicleTypes->typesOfFipe()->each(function ($type) use ($fipeServices, $vehicleBrands, $vehicleModels) {
+            //Get Brands By API
             $brands = $fipeServices->getBrandsByType($type->cod_fipe);
             array_walk($brands, function ($brand) use ($type, $vehicleBrands, $fipeServices, $vehicleModels) {
+                //Check model exists and then update if necessary 
                 $brand['vehicle_type_id'] = $type->id;
                 $brandModel = $vehicleBrands->updateOrCreate($brand);
-                // dd($brand);
+                //Get versions from API
                 $models = $fipeServices->getModels($type->id, $brand['cod_fipe']);
                 $hasModel = null;
                 array_walk($models, function ($model) use ($vehicleModels, $brandModel, &$hasModel) {
-                    $modelFromApi = strtok($model['Label'], " ");
-                    $hasModel = $vehicleModels->getModelByLabel(strtok($model['Label'], " "));
 
+                    //get name of model
+                    $modelFromApi = $this->exceptionListModelVersion($model['Label']);
+                    //check this model exist in database if not create a new
+                    $hasModel = $vehicleModels->getModelByLabel($modelFromApi);
+
+
+                    //Insert Or Update a version
                     if (!$hasModel || $modelFromApi !== @$hasModel->label) {
                         //Insert Version
                         $hasModel = $vehicleModels->updateOrCreate([
                             'label' => $modelFromApi,
                             'vehicle_brand_id' => $brandModel->id
                         ]);
-
-                        dd($hasModel);
                     }
 
-                    //Insert Version
-
-                    dd($hasModel, 'Fim');
-                    // preg_match('/\b\w+\b/i', $model['Label'], $result);
-                    dd(strtok($model['Label'], " "));
+                    $vehicleModels->insertVersionByModel($hasModel, [
+                        'label' => $model['Label'],
+                        'cod_fipe' => $model['Value']
+                    ]);
                 });
-                dd($models);
-                return $brand;
             }, $brands);
-            // $vehicleBrands->updateOrCreateMany($brands);
         });
-        // $brands = $fipeServices->filterBrands();
-        // $carBrandRepository = new CarBrandRepository();
-
-
-        // array_walk($brands, function ($brand) use ($carBrandRepository) {
-        //     $carBrandRepository->updateOrCreate([
-        //         'label' => $brand['Label'],
-        //         'cod_fipe' => $brand['Value']
-        //     ]);
-        // });
-
-        // $olxService = new VehicleOlxService();
-        // $carBrandRepository->insertModelsAndVersionsByBrand($olxService->getCarBrandsWithModels());
-
-        // $carModelVersionRepository = new CarModelVersionRepository();
-        // $allBrands = $carBrandRepository->cursor();
-        // $allBrands->each(function ($brand) use ($fipeServices, $carModelVersionRepository) {
-
-        //     if ($brand->cod_fipe) {
-        //         $allVersion = $fipeServices->filterModelVersionByBrandId($brand->cod_fipe);
-        //         array_walk($allVersion['Modelos'], function ($model) use ($carModelVersionRepository) {
-        //             $carModelVersion = $carModelVersionRepository->getModelVersionByLikeLabel($model['Label']);
-        //             if ($carModelVersion) {
-        //                 // dd($carModelVersion);
-        //                 $carModelVersionRepository->update($carModelVersion, [
-        //                     'label' => $model['Label'],
-        //                     'cod_fipe' => $model['Value'],
-        //                     'car_model_id' => $carModelVersion->car_model_id
-        //                 ]);
-        //                 // $carModelVersionRepository->updateOrCreate([
-        //                 //     'label' => $model['Label'],
-        //                 //     'cod_fipe' => $model['Value'],
-        //                 //     'car_model_id' => $carModelVersion->car_model_id
-        //                 // ]);
-        //             } else {
-        //                 dump($model['Label']);
-        //             }
-        //         });
-        //     }
-        // });
+    }
+    /**
+     * Check version is in exception list
+     * @return string
+     */
+    private function exceptionListModelVersion(string $version): string
+    {
+        $list = [
+            'Grand Siena' => 'Siena',
+            'Grand Saveiro' => 'Saveiro',
+            'Grand Vitara' => 'Vitara',
+            'Grand C4' => 'C4',
+            'Grand Caravan' => 'Caravan',
+            'Grand Cherokee' => 'Cherokee',
+            'Grand Carnival' => 'Carnival '
+        ];
+        foreach ($list as $value => $key) {
+            if (str_contains($version, $value)) {
+                return $key;
+            }
+        }
+        return strtok($version, " ");
     }
 }

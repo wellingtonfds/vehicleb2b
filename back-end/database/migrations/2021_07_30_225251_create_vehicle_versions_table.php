@@ -16,6 +16,7 @@ class CreateVehicleVersionsTable extends Migration
         Schema::create('vehicle_versions', function (Blueprint $table) {
             $table->id();
             $table->string('label');
+            $table->string('cod_fipe')->nullable();
             $table->unsignedBigInteger('vehicle_model_id');
             $table->foreign('vehicle_model_id')
                 ->references('id')

@@ -3,23 +3,18 @@
 namespace App\Services\Vehicle\Api;
 
 use App\Services\Vehicle\Api\VehicleApiInterface;
+use Exception;
 use Illuminate\Support\Facades\Http;
 
 class VehicleFipeService implements VehicleApiInterface
 {
     private array $data;
-    public function __construct()
-    {
-        // $this->data = $this->getDataFromApi('ConsultarMarcas');
-    }
-    // function getDataFromApi(string $method = self::GET, string $uri = null, array $params = []): array;
     public function getDataFromApi(string $method = VehicleApiInterface::POST, string $uri = null, array $params = []): array
     {
-        // self::POST
         $response = Http::post(env('API_FIPE') . $uri, $params);
-
-        // dd($response->json());
-
+        if ($response->failed()) {
+            throw new Exception('Error api FIPE ' . $response->status());
+        }
         return $response->json();
     }
     /**
@@ -39,7 +34,7 @@ class VehicleFipeService implements VehicleApiInterface
             return ['label' => $type['Label'], 'cod_fipe' => $type['Value']];
         }, $types);
     }
-    public function getModels(int $type, int $brand)
+    public function getModels(int $type, int $brand): array
     {
         $models =  $this->getDataFromApi(
             VehicleApiInterface::POST,
