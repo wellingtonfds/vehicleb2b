@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Vehicle\Api\VehicleApiProxy;
-use App\Services\Vehicle\Api\VehicleOlxService;
+use App\Models\Vehicle;
+use App\Http\Resources\VehicleResource;
 use App\Services\Vehicle\VehicleService;
 
-class VehicleController
+class VehicleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public $model = Vehicle::class;
+    public $resource = VehicleResource::class;
+    public $resourceCollection = LocationCollectionResource::class;
+    public $service = VehicleService::class;
+
+    public function __construct(VehicleService $service)
     {
-        $service = new VehicleService(new VehicleOlxService());
-        dd($service->updateCars());
+        $this->service = $service;
     }
 }
