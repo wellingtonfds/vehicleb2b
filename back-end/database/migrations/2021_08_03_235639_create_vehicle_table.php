@@ -16,7 +16,7 @@ class CreateVehicleTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->decimal('price', 10, 0);
-            $table->boolean('accept exchange')->default(false);
+            $table->boolean('accept_exchange')->default(false);
             $table->boolean('first_owner')->default(false);
             $table->boolean('financed')->default(false);
             $table->boolean('with_fines')->default(false);
