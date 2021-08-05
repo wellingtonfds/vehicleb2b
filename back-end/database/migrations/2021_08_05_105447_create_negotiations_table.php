@@ -17,7 +17,7 @@ class CreateNegotiationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('vehicle_id');
             $table->unsignedBigInteger('user_id');
-            $table->enum('status', ['open', 'done', 'cancelled']);
+            $table->enum('status', ['aberta', 'concluída', 'cancelada']);
             $table->timestamps();
         });
     }
