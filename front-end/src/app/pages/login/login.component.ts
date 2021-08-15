@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterContentChecked, AfterViewChecked, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -8,8 +8,21 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class LoginComponent implements OnInit {
 
   constructor() { }
+ 
 
+  // @ViewChild('login') public typeLogin;
+  // @ViewChild('register') public typeRegister;
+  public type = 'login';
   ngOnInit(): void {
+  }
+  
+
+  public registerForm(): void {
+    this.type = 'register';
+  }
+
+  public singIn(): void {
+    this.type = 'login';
   }
 
 }
