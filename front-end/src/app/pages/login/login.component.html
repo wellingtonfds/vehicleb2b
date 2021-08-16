@@ -5,16 +5,19 @@
                 <div class="header">
                     <h1>Faça seu login</h1>
                 </div>
-                <form class="form">
-                    <label>Login</label>
-                    <input>
-
-                    <label>Senha</label>
-                    <input>
+                <form class="form" [formGroup]="loginForm" autocomplete="off"> 
+                    <div class="control-form">
+                        <label>email</label>
+                        <input type="email" formControlName="email">
+                    </div>
+                    <div class="control-form">
+                        <label>Senha</label>
+                        <input type="password" formControlName="password">
+                    </div>
                 </form>
                 <div class="actions forgot">
                     <a>Esqueci minha senha</a>
-                    <button mat-raised-button color="primary">Logar</button>
+                    <button mat-raised-button color="primary" (click)="submitLogin()">Logar</button>
                 </div>
                 <div class="social">
                     <h3>Faça login com</h3>
@@ -32,47 +35,57 @@
 
                 </div>
                 <div class="actions register">
-                    <button (click)="registerForm()">Criar uma conta</button>
+                    <button (click)="toggleForm()">Criar uma conta</button>
                 </div>
             </div>
         </ng-template>
-       <ng-template #register>
-        <div class="login">
-            <div class="header">
-                <h1>Faça seu registro</h1>
-            </div>
-            <form class="form">
-                <label>Nome</label>
-                <input>
-
-                <label>Email</label>
-                <input>
-                <label>Senha</label>
-                <input>
-            </form>
-            <div class="actions forgot">
-                <button mat-raised-button color="primary">Registrar conta</button>
-            </div>
-            <div class="social">
-                <h3>Registar com</h3>
-                <div class="network">
-                    <button>
-                        <img src="/assets/img/icons/facebook.png">
-                    </button>
-                    <button>
-                        <img src="/assets/img/icons/google.png">
-                    </button>
-                    <button>
-                        <img src="/assets/img/icons/linkedin.png">
-                    </button>
+        <ng-template #register>
+            <div class="login">
+                <div class="header">
+                    <h1>Faça seu registro</h1>
+                </div>
+                <form class="form" [formGroup]="registerForm" autocomplete="off" (ngSubmit)="submitRegister()">
+                    <div class="control-form">
+                        <label>Nome</label>
+                        <input type="text" formControlName="name" required>
+                    </div>
+                    <div class="control-form">
+                        <label>Email</label>
+                        <input type="email" formControlName="email" required>
+                    </div>
+                    <div class="control-form">
+                        <label>Senha</label>
+                        <input type="password" formControlName="password" required>
+                    </div>
+                    <div class="control-form">
+                        <label>Confirme senha</label>
+                        <input type="password" formControlName="password_confirmation" required>
+                    </div>
+                    <div class="actions forgot">
+                        <span [hidden]="registerForm.valid">Complete o formulário para enviar</span>
+                        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">Registrar conta</button>
+                    </div>
+                </form>
+                <div class="social">
+                    <h3>Registar com</h3>
+                    <div class="network">
+                        <button>
+                            <img src="/assets/img/icons/facebook.png">
+                        </button>
+                        <button>
+                            <img src="/assets/img/icons/google.png">
+                        </button>
+                        <button>
+                            <img src="/assets/img/icons/linkedin.png">
+                        </button>
+                    </div>
+                </div>
+                <div class="actions register">
+                    <span>Já tem uma conta </span> <button (click)="toggleForm()"> faça seu login aqui</button>
                 </div>
             </div>
-            <div class="actions register">
-                <span>Já tem uma conta </span> <button (click)="singIn()"> faça seu login aqui</button>
-            </div>
-        </div>
-       </ng-template>
-       <ng-template [ngTemplateOutlet]="type == 'login' ? login: register "></ng-template>
+        </ng-template>
+        <ng-template [ngTemplateOutlet]="type == 'login' ? login: register "></ng-template>
         <div class="info">
             <div class="header">
                 <h3>Contrary to popular belief, Lorem Ipsum is not simply random tex</h3>

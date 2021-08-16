@@ -37,6 +37,6 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('locations', \App\Http\Controllers\LocationsController::class);
 });
 Route::apiResource('vehicle', \App\Http\Controllers\VehicleController::class);
-Route::apiResource('car/model/version', \App\Http\Controllers\CarModelVersionController::class);
-Route::apiResource('car/model', \App\Http\Controllers\CarModelController::class);
-Route::apiResource('car', \App\Http\Controllers\CarController::class);
+// Route::apiResource('car/model/version', \App\Http\Controllers\CarModelVersionController::class);
+// Route::apiResource('car/model', \App\Http\Controllers\CarModelController::class);
+// Route::apiResource('car', \App\Http\Controllers\CarController::class);

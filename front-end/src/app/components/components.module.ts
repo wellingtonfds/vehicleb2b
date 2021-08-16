@@ -2,19 +2,25 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainModule } from './layouts/main/main.module';
 import { ExternalModule } from './layouts/external/external.module';
-
-
+import { ErrorComponent } from './error/error.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [],
+  declarations: [ErrorComponent],
   imports: [
     CommonModule,
+    MatDialogModule,
     MainModule,
-    ExternalModule
+    ExternalModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   exports: [
     MainModule,
-    ExternalModule
+    ExternalModule,
+    ErrorComponent,
   ]
 })
 export class ComponentsModule { }

@@ -19,11 +19,9 @@ export class AppComponent {
   public isExternal(): boolean {
     for (const route of this.externalRoutes) {
       if (this.router.url.toString().indexOf(route) > -1) {
-        console.log('false')
         return false;
       }
     }
-    console.log('true')
     return true;
   }
 }
