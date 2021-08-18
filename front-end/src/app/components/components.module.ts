@@ -6,9 +6,10 @@ import { ErrorComponent } from './error/error.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
-  declarations: [ErrorComponent],
+  declarations: [ErrorComponent, AlertComponent],
   imports: [
     CommonModule,
     MatDialogModule,
@@ -21,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
     MainModule,
     ExternalModule,
     ErrorComponent,
+    AlertComponent
   ]
 })
 export class ComponentsModule { }

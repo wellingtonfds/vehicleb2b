@@ -12,13 +12,11 @@
     -webkit-box-shadow: 5px 5px 30px 5px #000000;
     box-shadow: 5px 5px 30px 5px #000000;
     border-radius: 5px;
-    height: 120vh;
+    min-height: 500px;
     background-size: initial;
     background-position: auto;
     display: flex;
     flex-direction: row;
-    // justify-content: flex-end;
-    background: rgb(2, 0, 36);
     background: linear-gradient(
       254deg,
       rgba(2, 0, 36, 1) 26%,
@@ -68,8 +66,6 @@
             padding: 8px;
           }
         }
-       
-       
       }
       .actions {
         display: flex;

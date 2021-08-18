@@ -30,13 +30,8 @@ export class AuthService {
     );
   }
 
-  public resetPassword(email: string, password: string, token: string): Observable<any> {
-    return this.http.post<User>(`${environment.apiUrl}reset-password `, {
-      email,
-      password,
-      password_confirmation: password,
-      token
-    });
+  public resetPassword(resetPassword: any): Observable<any> {
+    return this.http.post<User>(`${environment.apiUrl}reset-password `, resetPassword);
   }
   public authUser(user: string, password: string): Observable<any> {
     return this.http.post<User>(`${environment.apiUrl}oauth/token`, {
@@ -53,7 +48,12 @@ export class AuthService {
     }));
   }
   public registerUser(newUser): Observable<User> {
-    return this.http.post<User>(`${environment.apiUrl}register`, newUser);
+    return this.http.post<User>(`${environment.apiUrl}register`, newUser)
+    .pipe(map(resUser => {
+      sessionStorage.setItem('vehicle_b2b_0', JSON.stringify(resUser));
+      this.checkSession().subscribe();
+      return resUser;
+    }));
   }
   public updateUser(newUser): Observable<User> {
     return this.http.put<User>(`${environment.apiUrl}users/${newUser.id}`, newUser);

@@ -99,6 +99,34 @@
                 <span [hidden]="forgotForm.valid">Complete o formulário para enviar</span>
             </div>
         </div>
+        <div class="login" *ngSwitchCase="'changePassword'">
+            <div class="header">
+                <h1>Troque sua sua senha</h1>
+            </div>
+            <form class="form" [formGroup]="changePasswordForm" autocomplete="off">
+                <div class="control-form">
+                    <label>Token</label>
+                    <input type="text" formControlName="token">
+                </div>
+                <div class="control-form">
+                    <label>Email</label>
+                    <input type="email" formControlName="email">
+                </div>
+                <div class="control-form">
+                    <label>Senha</label>
+                    <input type="password" formControlName="password" required>
+                </div>
+                <div class="control-form">
+                    <label>Confirme senha</label>
+                    <input type="password" formControlName="password_confirmation" required>
+                </div>
+            </form>
+            <div class="actions forgot">
+                <a (click)="setForm('login')">voltar para login</a>
+                <button mat-raised-button color="primary" (click)="submitChangePassword()" [disabled]="!changePasswordForm.valid">Recuperar senha</button>
+                <span [hidden]="changePasswordForm.valid">Complete o formulário para enviar</span>
+            </div>
+        </div>
         <!-- <ng-template *ngTemplateOutlet="login"></ng-template> -->
         <div class="info">
             <div class="header">
