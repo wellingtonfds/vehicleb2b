@@ -1,91 +1,105 @@
 <div class="container">
-    <div class="box-login">
-        <ng-template #login>
-            <div class="login">
-                <div class="header">
-                    <h1>Faça seu login</h1>
-                </div>
-                <form class="form" [formGroup]="loginForm" autocomplete="off"> 
-                    <div class="control-form">
-                        <label>email</label>
-                        <input type="email" formControlName="email">
-                    </div>
-                    <div class="control-form">
-                        <label>Senha</label>
-                        <input type="password" formControlName="password">
-                    </div>
-                </form>
-                <div class="actions forgot">
-                    <a>Esqueci minha senha</a>
-                    <button mat-raised-button color="primary" (click)="submitLogin()">Logar</button>
-                </div>
-                <div class="social">
-                    <h3>Faça login com</h3>
-                    <div class="network">
-                        <button>
-                            <img src="/assets/img/icons/facebook.png">
-                        </button>
-                        <button>
-                            <img src="/assets/img/icons/google.png">
-                        </button>
-                        <button>
-                            <img src="/assets/img/icons/linkedin.png">
-                        </button>
-                    </div>
+    <div class="box-login" [ngSwitch]="type">
 
+        <div class="login" *ngSwitchCase="'login'">
+            <div class="header">
+                <h1>Faça seu login</h1>
+            </div>
+            <form class="form" [formGroup]="loginForm" autocomplete="off">
+                <div class="control-form">
+                    <label>Email</label>
+                    <input type="email" formControlName="email">
                 </div>
-                <div class="actions register">
-                    <button (click)="toggleForm()">Criar uma conta</button>
+                <div class="control-form">
+                    <label>Senha</label>
+                    <input type="password" formControlName="password">
+                </div>
+            </form>
+            <div class="actions forgot">
+                <a (click)="setForm('forgot')">Esqueci minha senha</a>
+                <button mat-raised-button color="primary" (click)="submitLogin()">Logar</button>
+            </div>
+            <div class="social">
+                <h3>Faça login com</h3>
+                <div class="network">
+                    <button>
+                        <img src="/assets/img/icons/facebook.png">
+                    </button>
+                    <button>
+                        <img src="/assets/img/icons/google.png">
+                    </button>
+                    <button>
+                        <img src="/assets/img/icons/linkedin.png">
+                    </button>
+                </div>
+
+            </div>
+            <div class="actions register">
+                <button (click)="setForm('register')">Criar uma conta</button>
+            </div>
+        </div>
+        <div class="login" *ngSwitchCase="'register'">
+            <div class="header">
+                <h1>Faça seu registro</h1>
+            </div>
+            <form class="form" [formGroup]="registerForm" autocomplete="off" (ngSubmit)="submitRegister()">
+                <div class="control-form">
+                    <label>Nome</label>
+                    <input type="text" formControlName="name" required>
+                </div>
+                <div class="control-form">
+                    <label>Email</label>
+                    <input type="email" formControlName="email" required>
+                </div>
+                <div class="control-form">
+                    <label>Senha</label>
+                    <input type="password" formControlName="password" required>
+                </div>
+                <div class="control-form">
+                    <label>Confirme senha</label>
+                    <input type="password" formControlName="password_confirmation" required>
+                </div>
+                <div class="actions forgot">
+                    <span [hidden]="registerForm.valid">Complete o formulário para enviar</span>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">Registrar
+                        conta</button>
+                </div>
+            </form>
+            <div class="social">
+                <h3>Registar com</h3>
+                <div class="network">
+                    <button>
+                        <img src="/assets/img/icons/facebook.png">
+                    </button>
+                    <button>
+                        <img src="/assets/img/icons/google.png">
+                    </button>
+                    <button>
+                        <img src="/assets/img/icons/linkedin.png">
+                    </button>
                 </div>
             </div>
-        </ng-template>
-        <ng-template #register>
-            <div class="login">
-                <div class="header">
-                    <h1>Faça seu registro</h1>
-                </div>
-                <form class="form" [formGroup]="registerForm" autocomplete="off" (ngSubmit)="submitRegister()">
-                    <div class="control-form">
-                        <label>Nome</label>
-                        <input type="text" formControlName="name" required>
-                    </div>
-                    <div class="control-form">
-                        <label>Email</label>
-                        <input type="email" formControlName="email" required>
-                    </div>
-                    <div class="control-form">
-                        <label>Senha</label>
-                        <input type="password" formControlName="password" required>
-                    </div>
-                    <div class="control-form">
-                        <label>Confirme senha</label>
-                        <input type="password" formControlName="password_confirmation" required>
-                    </div>
-                    <div class="actions forgot">
-                        <span [hidden]="registerForm.valid">Complete o formulário para enviar</span>
-                        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">Registrar conta</button>
-                    </div>
-                </form>
-                <div class="social">
-                    <h3>Registar com</h3>
-                    <div class="network">
-                        <button>
-                            <img src="/assets/img/icons/facebook.png">
-                        </button>
-                        <button>
-                            <img src="/assets/img/icons/google.png">
-                        </button>
-                        <button>
-                            <img src="/assets/img/icons/linkedin.png">
-                        </button>
-                    </div>
-                </div>
-                <div class="actions register">
-                    <span>Já tem uma conta </span> <button (click)="toggleForm()"> faça seu login aqui</button>
-                </div>
+            <div class="actions register">
+                <span>Já tem uma conta </span> <button (click)="setForm('login')"> faça seu login aqui</button>
             </div>
-        </ng-template>
-        <ng-template [ngTemplateOutlet]="type == 'login' ? login: register "></ng-template>
+        </div>
+        <div class="login" *ngSwitchCase="'forgot'">
+            <div class="header">
+                <h1>Informe seu email</h1>
+            </div>
+            <form class="form" [formGroup]="forgotForm" autocomplete="off">
+                <div class="control-form">
+                    <label>Email</label>
+                    <input type="email" formControlName="email">
+                </div>
+            </form>
+            <div class="actions forgot">
+                <a (click)="setForm('login')">voltar para login</a>
+                <button mat-raised-button color="primary" (click)="submitForgot()" [disabled]="!forgotForm.valid">Recuperar senha</button>
+                <span [hidden]="forgotForm.valid">Complete o formulário para enviar</span>
+            </div>
+        </div>
+        <!-- <ng-template *ngTemplateOutlet="login"></ng-template> -->
         <div class="info">
             <div class="header">
                 <h3>Contrary to popular belief, Lorem Ipsum is not simply random tex</h3>

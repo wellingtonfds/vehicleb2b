@@ -13,6 +13,7 @@ import { AuthService } from '@services/auth/auth.service';
 export class LoginComponent implements OnInit {
   public registerForm: FormGroup;
   public loginForm: FormGroup;
+  public forgotForm: FormGroup;
   constructor(
     public fb: FormBuilder,
     private userService: UserService,
@@ -35,15 +36,31 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    this.forgotForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
   }
 
-  public toggleForm(): void {
-    this.type = this.type === 'login' ? 'register' : 'login';
+  public setForm(form): void {
+    this.type = form;
   }
 
-  public submitLogin():void {
+  public submitForgot(): void {
+    if (this.forgotForm.valid) {
+      console.log(this.forgotForm.value);
+      this.authService.forgotPassword(this.forgotForm.controls.email.value).subscribe({
+        next: (res) => {
+          console.log('res', res);
+        },
+        error: (error) => {
+          this.errorService.traitError(error.error?.error?.message || error.error?.errors || 'Error no servidor tente novamente')
+        }
+      });
+    }
+  }
+  public submitLogin(): void {
     if (this.loginForm.valid) {
-      
       const email = this.loginForm.controls.email.value
       const password = this.loginForm.controls.password.value
       this.authService.authUser(email, password).subscribe({
@@ -57,7 +74,7 @@ export class LoginComponent implements OnInit {
 
 
       })
-    
+
     }
   }
 
