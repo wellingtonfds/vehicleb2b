@@ -8,7 +8,8 @@ export const environment = {
     client_secret: 'yGJDNTYMgF40CoE8Y2VSsu2OPB1fBeK2hAbl5KyF',
     scope: '*',
   },
-
+  googleId: '116590376197-pg6pu7208h8vse4c5l8jbir902gs1ohc.apps.googleusercontent.com',
+  facebookId: '230544595740255',
   apiUrl: 'http://localhost/api/',
   production: false
 };

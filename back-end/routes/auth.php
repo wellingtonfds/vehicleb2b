@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -34,4 +35,8 @@ Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
     ->name('password.confirm');
 
 Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
+    ->middleware('guest')
     ->middleware('auth');
+
+Route::post('/auth', [AuthController::class, 'authSocial'])
+    ->middleware('guest');

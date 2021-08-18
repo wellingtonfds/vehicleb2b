@@ -5,7 +5,8 @@ import { User } from '@models/users.model';
 import { ErrorService } from '@services/error/error.service';
 import { AuthService } from '@services/auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '@services/alert/alert.service';
+import { GoogleLoginProvider, SocialAuthService, FacebookLoginProvider } from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     private errorService: ErrorService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private socialAuthService: SocialAuthService
 
   ) { }
 
@@ -58,7 +60,37 @@ export class LoginComponent implements OnInit {
       this.setForm('changePassword');
     }
   }
+  public signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((userData) => {
+      console.log('userData', userData);
 
+      this.authService.authSocialUser({
+        email: userData.email,
+        name: userData.name,
+        id_token: userData.id,
+        provider: userData.provider
+      }).subscribe({
+        next: (res) => {
+          console.log(res)
+          // this.alertService.show('confirmação', res.msg).afterClosed().subscribe(res => {
+          //   this.setForm('login');
+          // });
+        },
+        error: (error) => {
+          this.errorService.traitError(error.error?.error?.message || error.error?.errors || 'Error no servidor tente novamente')
+        }
+      });
+    
+      // this.googleCad.email = userData.email;
+      // this.googleCad.photo = userData.photoUrl;
+      // this.googleCad.google_id = userData.id;
+      // this.googleCad.google_token = userData.authToken;
+      // this.facebookCad.terms = true;
+    });
+  }
+  public signInWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
   public setForm(form): void {
     this.type = form;
   }

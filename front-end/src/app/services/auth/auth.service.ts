@@ -47,13 +47,23 @@ export class AuthService {
       return resUser;
     }));
   }
-  public registerUser(newUser): Observable<User> {
-    return this.http.post<User>(`${environment.apiUrl}register`, newUser)
-    .pipe(map(resUser => {
+
+  public authSocialUser(form: any): Observable<any> {
+    return this.http.post<User>(`${environment.apiUrl}auth`, form).pipe(map(resUser => {
       sessionStorage.setItem('vehicle_b2b_0', JSON.stringify(resUser));
       this.checkSession().subscribe();
       return resUser;
     }));
+  }
+
+
+  public registerUser(newUser): Observable<User> {
+    return this.http.post<User>(`${environment.apiUrl}register`, newUser)
+      .pipe(map(resUser => {
+        sessionStorage.setItem('vehicle_b2b_0', JSON.stringify(resUser));
+        this.checkSession().subscribe();
+        return resUser;
+      }));
   }
   public updateUser(newUser): Observable<User> {
     return this.http.put<User>(`${environment.apiUrl}users/${newUser.id}`, newUser);

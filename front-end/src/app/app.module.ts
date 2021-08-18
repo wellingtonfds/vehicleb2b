@@ -11,6 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TokenInterceptor } from './interceptors/token/token.interceptor';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
+import { environment as env } from '@env/environment';
+
 
 
 @NgModule({
@@ -18,7 +21,7 @@ import { TokenInterceptor } from './interceptors/token/token.interceptor';
     AppComponent
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule,
@@ -26,6 +29,7 @@ import { TokenInterceptor } from './interceptors/token/token.interceptor';
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
+    SocialLoginModule
   ],
   exports: [
     MatButtonModule,
@@ -33,6 +37,22 @@ import { TokenInterceptor } from './interceptors/token/token.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(env.googleId)
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(env.facebookId)
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,5 @@
 <div class="container">
     <div class="box-login" [ngSwitch]="type">
-
         <div class="login" *ngSwitchCase="'login'">
             <div class="header">
                 <h1>Faça seu login</h1>
@@ -22,15 +21,15 @@
             <div class="social">
                 <h3>Faça login com</h3>
                 <div class="network">
-                    <button>
+                    <button (click)="signInWithFB()">
                         <img src="/assets/img/icons/facebook.png">
                     </button>
-                    <button>
+                    <button (click)="signInWithGoogle()">
                         <img src="/assets/img/icons/google.png">
                     </button>
-                    <button>
+                    <!-- <button>
                         <img src="/assets/img/icons/linkedin.png">
-                    </button>
+                    </button> -->
                 </div>
 
             </div>
@@ -95,7 +94,8 @@
             </form>
             <div class="actions forgot">
                 <a (click)="setForm('login')">voltar para login</a>
-                <button mat-raised-button color="primary" (click)="submitForgot()" [disabled]="!forgotForm.valid">Recuperar senha</button>
+                <button mat-raised-button color="primary" (click)="submitForgot()"
+                    [disabled]="!forgotForm.valid">Recuperar senha</button>
                 <span [hidden]="forgotForm.valid">Complete o formulário para enviar</span>
             </div>
         </div>
@@ -123,7 +123,8 @@
             </form>
             <div class="actions forgot">
                 <a (click)="setForm('login')">voltar para login</a>
-                <button mat-raised-button color="primary" (click)="submitChangePassword()" [disabled]="!changePasswordForm.valid">Recuperar senha</button>
+                <button mat-raised-button color="primary" (click)="submitChangePassword()"
+                    [disabled]="!changePasswordForm.valid">Recuperar senha</button>
                 <span [hidden]="changePasswordForm.valid">Complete o formulário para enviar</span>
             </div>
         </div>
