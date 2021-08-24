@@ -2,20 +2,14 @@
 
 namespace App\Services\Vehicle;
 
-use App\Models\VehicleType;
-use App\Repositories\CarBrandRepository;
-use App\Repositories\CarModelVersionRepository;
-use App\Repositories\VehicleBrandRepository;
-use App\Repositories\VehicleModelRepository;
 use App\Repositories\VehicleRepository;
-use App\Repositories\VehicleTypeRepository;
 use App\Services\Crud\CrudServiceAbstract;
 use App\Services\Crud\CrudServiceInterface;
-use App\Services\Vehicle\Api\VehicleApiInterface;
-use App\Services\Vehicle\Api\VehicleApiProxyInterface;
+use App\Repositories\VehicleTypeRepository;
+use App\Repositories\VehicleBrandRepository;
+use App\Repositories\VehicleModelRepository;
 use App\Services\Vehicle\Api\VehicleFipeService;
-use App\Services\Vehicle\Api\VehicleOlxService;
-use Illuminate\Support\Arr;
+
 
 class VehicleService extends CrudServiceAbstract implements VehicleServiceInterface, CrudServiceInterface
 {
