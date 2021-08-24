@@ -55,8 +55,25 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return $user;
+        $client = \Laravel\Passport\Client::where('password_client', 1)->first();
+
+        $request->request->add([
+            'grant_type'    => 'password',
+            'client_id'     => $client->id,
+            'client_secret' => $client->secret,
+            'username'      => $user->email,
+            'password'      => $request->password,
+            'scope'         => '*',
+        ]);
+
+        // Fire off the internal request. 
+        $proxy = Request::create(
+            'api/oauth/token',
+            'POST'
+        );
+
+        return \Route::dispatch($proxy);
     }
 }

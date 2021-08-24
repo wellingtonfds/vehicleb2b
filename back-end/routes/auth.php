@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -17,7 +18,6 @@ Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
     ->name('password.request');
 
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-    ->middleware('guest')
     ->name('password.email');
 
 Route::post('/reset-password', [NewPasswordController::class, 'store'])
@@ -35,4 +35,8 @@ Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
     ->name('password.confirm');
 
 Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
+    ->middleware('guest')
     ->middleware('auth');
+
+Route::post('/auth', [AuthController::class, 'authSocial'])
+    ->middleware('guest');

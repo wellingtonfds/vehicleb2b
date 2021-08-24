@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         if (!$this->app->routesAreCached()) {
-            Passport::routes();
+            Passport::routes(null, ['prefix' => 'api/oauth']);
         }
     }
 }

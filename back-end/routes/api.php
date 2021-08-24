@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,10 +34,10 @@ Route::get('cities/ibge', [\App\Http\Controllers\CitiesController::class, 'getFr
 
 Route::middleware('auth:api')->group(function () {
     require __DIR__ . '/api/locations.php';
-
+    Route::put('user/type', [UsersController::class, 'setType']);
     Route::apiResource('locations', \App\Http\Controllers\LocationsController::class);
 });
 Route::apiResource('vehicle', \App\Http\Controllers\VehicleController::class);
-Route::apiResource('car/model/version', \App\Http\Controllers\CarModelVersionController::class);
-Route::apiResource('car/model', \App\Http\Controllers\CarModelController::class);
-Route::apiResource('car', \App\Http\Controllers\CarController::class);
+// Route::apiResource('car/model/version', \App\Http\Controllers\CarModelVersionController::class);
+// Route::apiResource('car/model', \App\Http\Controllers\CarModelController::class);
+// Route::apiResource('car', \App\Http\Controllers\CarController::class);

@@ -42,12 +42,12 @@ class NewPasswordController extends Controller
                 event(new PasswordReset($user));
             }
         );
-
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
+
         return $status == Password::PASSWORD_RESET
-            ? response()->json(['msg' => 'senha alterada com sucesso'])
-            : response()->json(['error' => $status])->status(422);
+            ? response()->json(['msg' => 'senha alterada com sucesso', 'status' => trans($status)])
+            : response()->json(['error' => trans($status)])->status(422);
     }
 }

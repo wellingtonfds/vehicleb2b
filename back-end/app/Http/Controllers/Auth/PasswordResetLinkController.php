@@ -30,6 +30,6 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
-        return response()->json(['msg' => 'E-email enviado com as instruções!']);
+        return response()->json(['msg' => 'E-email enviado com as instruções!', 'status' => trans($status)]);
     }
 }
