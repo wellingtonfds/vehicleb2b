@@ -1,0 +1,22 @@
+<section class="container">
+    <p class="welcome">
+        Olá <b>{{user.name}}</b>, nesse momento estamos listando os planos
+    </p>
+    <div class="plans">
+        <div class="plan" *ngFor="let item of paginateItems?.data">
+            <div class="header">
+                {{item.name}}
+            </div>
+            <div class="content">
+                <img>
+                <div class="description">
+                    {{item.description}}
+                </div>
+                <div class="price">{{item.price |  currency}}</div>
+                <div class="action">
+                    <button mat-raised-button color="primary">Pegar esse</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+</section>

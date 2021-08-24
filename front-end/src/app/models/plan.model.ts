@@ -1,10 +1,10 @@
 
-export interface User {
+export interface Plan {
     id: bigint;
     name: string;
-    email: string;
-    password: string;
-    type: 'lojista' | 'consultor';
+    description: string;
+    type: 'consultor' | 'lojista';
+    price: number;
     // tslint:disable-next-line:variable-name
     created_at: Date;
     // tslint:disable-next-line:variable-name

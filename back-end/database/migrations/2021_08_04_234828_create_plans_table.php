@@ -17,6 +17,7 @@ class CreatePlansTable extends Migration
             $table->id();
             $table->string('name');
             $table->tinyText('description');
+            $table->enum('type', ['lojista', 'consultor'])->nullable();
             $table->decimal('price', 10, 0);
             $table->timestamps();
         });

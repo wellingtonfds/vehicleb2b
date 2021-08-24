@@ -13,13 +13,19 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip\
-    libzip-dev
+    libzip-dev 
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pcntl exif zip
+
+#Install ext-php
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions http
 
 # install cron
 RUN apt-get update && apt-get -y install rsyslog

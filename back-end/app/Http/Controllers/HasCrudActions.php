@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
 trait HasCrudActions
 {
@@ -35,9 +36,16 @@ trait HasCrudActions
 
 
     public $service;
-    public function index()
+    public function index(Request $request)
     {
-        return new $this->resourceCollection($this->service->all());
+        $paginate = $request->has('per_page') ? $request->per_page : 20;
+        $model = new $this->model;
+        $list = QueryBuilder::for($this->model)
+            ->allowedFilters($model->getFillable())
+            ->allowedFields($model->getFillable())
+            ->allowedSorts($model->getFillable())
+            ->paginate($paginate);
+        return new $this->resourceCollection($list);
     }
 
     /**
