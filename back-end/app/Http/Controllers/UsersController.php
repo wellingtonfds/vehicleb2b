@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserSetTypeRequest;
 use App\Http\Resources\UserCollectionResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\User\UserService;
 use http\Exception\UnexpectedValueException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UsersController extends Controller
@@ -17,6 +19,10 @@ class UsersController extends Controller
     public $model = User::class;
     public $service = UserService::class;
 
+    public function __construct(UserService $service)
+    {
+        $this->service = $service;
+    }
     public function update(Request $request, int $model)
     {
         // If it's not an admin
@@ -30,7 +36,6 @@ class UsersController extends Controller
                 throw new UnauthorizedHttpException('Você não tem permissão para ver essa loja');
             }
         }
-
     }
 
     public function show(int $model)
@@ -65,5 +70,11 @@ class UsersController extends Controller
         $users = $this->model::query()->where('type', $type)->paginate();
 
         return new $this->resourceCollection($users);
+    }
+
+    public function setType(UserSetTypeRequest $request)
+    {
+        $user = Auth::user();
+        return new $this->resource($this->service->update($user->id, $request->all()));
     }
 }

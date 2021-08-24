@@ -14,7 +14,13 @@ export class UserService extends CrudService<User> {
     super(http, 'users');
   }
 
-  public register(user: User): Observable<User>  {
+  public register(user: User): Observable<User> {
     return this.http.post<User>(`${environment.apiUrl}register`, user);
+  }
+  public user(): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}user`);
+  }
+  public setType(type: 'lojista' | 'consultor'): Observable<User> {
+    return this.http.put<User>(`${environment.apiUrl}user/type`, { type });
   }
 }

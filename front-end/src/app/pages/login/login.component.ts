@@ -4,7 +4,7 @@ import { UserService } from '@services/user/user.service';
 import { User } from '@models/users.model';
 import { ErrorService } from '@services/error/error.service';
 import { AuthService } from '@services/auth/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
 import { GoogleLoginProvider, SocialAuthService, FacebookLoginProvider } from 'angularx-social-login';
 
@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     private errorService: ErrorService,
     private authService: AuthService,
     private route: ActivatedRoute,
+    private router: Router,
     private alertService: AlertService,
     private socialAuthService: SocialAuthService
 
@@ -72,6 +73,7 @@ export class LoginComponent implements OnInit {
       }).subscribe({
         next: (res) => {
           console.log(res)
+          this.router.navigateByUrl('home');
           // this.alertService.show('confirmação', res.msg).afterClosed().subscribe(res => {
           //   this.setForm('login');
           // });
@@ -116,7 +118,8 @@ export class LoginComponent implements OnInit {
       const password = this.loginForm.controls.password.value
       this.authService.authUser(email, password).subscribe({
         next: (res) => {
-          console.log('res', res);
+          // console.log('res', res);
+          this.router.navigateByUrl('home');
         },
         error: (error) => {
           this.errorService.traitError(error.error?.error?.message || error.error?.errors || 'Error no servidor tente novamente')
@@ -132,6 +135,7 @@ export class LoginComponent implements OnInit {
       this.userService.register(this.registerForm.value).subscribe({
         next: (res) => {
           console.log('res', res);
+          this.router.navigateByUrl('home');
         },
         error: (error) => {
           this.errorService.traitError(error.error?.error?.message || error.error?.errors || 'Error no servidor tente novamente')

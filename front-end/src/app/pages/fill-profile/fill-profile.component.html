@@ -1,0 +1,27 @@
+<section class="container">
+    <mat-card>
+        <mat-card-title>Seja bem vindo ao B2b</mat-card-title>
+        <mat-card-content>
+            <h4>Primeiramente precisamos saber qual o seu objetivo, são elas:</h4>
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Logista
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Você cadastra seu estoque, e o consultor pode negociar seus carros</p>
+                <button (click)="chooseShopkeeper()" mat-raised-button color="primary">Escolher esse</button>
+            </mat-expansion-panel>
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Consultor
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Você não tem estoque e negócia os carros das lojas</p>
+                <button (click)="chooseConsult()" mat-raised-button color="accent">Escolher esse</button>
+            </mat-expansion-panel>
+        </mat-card-content>
+
+    </mat-card>
+</section>
