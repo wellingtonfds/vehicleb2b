@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'token_facebook',
         'token_google',
+        'token_ml',
         'type',
         'password',
     ];

@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('token_facebook')->nullable();
             $table->string('token_google')->nullable();
+            $table->string('token_ml')->nullable();
             $table->string('password')->nullable();
             $table->enum('type', ['lojista', 'consultor', 'administrador'])->nullable();
             $table->rememberToken();

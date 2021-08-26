@@ -42,14 +42,14 @@ class PaymentFactory implements PaymentFactoryInterface
                         "street_number" => 3003
                     ]
                 ],
-                "barcode" => []
             ],
             "description" => "Payment for service",
             "external_reference" => "MP0001",
             "installments" => 1,
             "metadata" => [],
             "order" => [
-                "type" => "mercadolibre"
+                "type" => "merchant_order",
+                "id" => 123333
             ],
             "payer" => [
                 "entity_type" => "individual",

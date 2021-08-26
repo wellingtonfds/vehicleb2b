@@ -6,6 +6,7 @@ import { filter } from 'rxjs/operators';
 import { FilterQuery } from '@models/filter-query.model';
 import { Plan } from '../../models/plan.model';
 import { Paginate } from '@models/paginate.model';
+import { PaymentService } from '@services/payment/payment.service';
 
 @Component({
   selector: 'app-plan',
@@ -20,7 +21,8 @@ export class PlanComponent implements OnInit {
   public paginateItems: Paginate<Plan>;
   constructor(
     private route: ActivatedRoute,
-    private planService: PlanService
+    private planService: PlanService,
+    private paymentService: PaymentService
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +41,11 @@ export class PlanComponent implements OnInit {
     this.planService.list(page, perPage, filter).subscribe(paginate => {
       this.paginateItems = paginate;
       console.log(paginate)
+    });
+  }
+  public createPayment(plan: Plan): void {
+    this.paymentService.create(plan).subscribe({
+      next: (res) => console.log('res', res)
     });
   }
 }

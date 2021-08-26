@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Factory\Payment;
+namespace App\Factory\TypePayment;
 
 use App\Factory\TypePayment\TypePaymentFactoryInterface;
 use App\Services\Payment\Api\PaymentApiServiceInterface;

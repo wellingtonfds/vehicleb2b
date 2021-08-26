@@ -5,8 +5,10 @@ namespace App\Providers;
 use App\Services\Location\LocationService;
 use App\Services\Location\LocationServiceInterface;
 use App\Services\Plan\PlanService;
+use App\Services\Plan\UserPlanServiceInterface;
 use App\Services\User\UserService;
 use App\Services\User\UserServiceInterface;
+use App\Services\UserPlan\UserPlanService;
 use App\Services\Vehicle\VehicleService;
 use App\Services\Vehicle\VehicleServiceInterface;
 use Illuminate\Support\ServiceProvider;
@@ -36,6 +38,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             PlanServiceInterface::class,
             PlanService::class
+        );
+        $this->app->bind(
+            UserPlanServiceInterface::class,
+            UserPlanService::class
         );
     }
 

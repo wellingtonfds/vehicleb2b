@@ -14,7 +14,7 @@
                 </div>
                 <div class="price">{{item.price |  currency}}</div>
                 <div class="action">
-                    <button mat-raised-button color="primary">Pegar esse</button>
+                    <button mat-raised-button color="primary" (click)="createPayment(item)" >Pegar esse</button>
                 </div>
             </div>
         </div> 

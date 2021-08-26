@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class CrudServiceAbstract implements CrudServiceInterface
 {
-    private $repository;
+    public RepositoryInterface $repository;
     public function __construct(RepositoryInterface $repository)
     {
         $this->repository = $repository;
